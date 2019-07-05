@@ -2,7 +2,6 @@ require 'rack'
 require_relative '../lib/controller_base'
 require_relative '../lib/router'
 
-
 $cats = [
   { id: 1, name: "Curie" },
   { id: 2, name: "Markov" }
@@ -26,6 +25,7 @@ end
 
 class Cats2Controller < ControllerBase
   def index
+    cats = $cats
     render_content(cats.to_json, "application/json")
   end
 end
