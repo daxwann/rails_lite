@@ -12,7 +12,7 @@ class Route
   # checks if pattern matches path and method matches request method
   def matches?(req)
     return false unless req.path.match(pattern)
-    return false unless req.request_method == http_method.upcase
+    return false unless req.request_method.downcase.to_sym == http_method
 
     true
   end
@@ -50,7 +50,7 @@ class Router
   # when called add route
   [:get, :post, :put, :delete].each do |http_method|
     define_method(http_method) do |pattern, controller_class, action_name|
-      add_route(pattern, http_method.to_s, controller_class, action_name)
+      add_route(pattern, http_method, controller_class, action_name)
     end
   end
 
