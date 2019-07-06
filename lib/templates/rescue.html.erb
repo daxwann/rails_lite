@@ -1,7 +1,30 @@
+<!DOCTYPE html>
+<html>
 <head>
 </head>
 
 <body>
   <h2><%= e.class %>: <%= e.message %></h2>
-  <p>Extracted source around line <b><%= show_src_line_num(e) %></b></p>
+  <p>Extracted source (around line <b><%= find_src_line_num(e) %></b>)</p> 
+  <div>
+    <table>
+      <% extract_formatted_source(e).each do |line_num, line| %>
+        <tr>
+          <td>
+            <pre><%= line_num %></pre>
+          </td>
+          <td>
+          <pre><%= 'error' if line_num == find_src_line_num(e) %><% line %></pre>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div>
+  <p><%= File.expand_path(find_src_file(e)) %></p>
+  </div>
+  <div>
+    <h3>Stack Trace</h3>
+  </div>
 </body>
+</html>
