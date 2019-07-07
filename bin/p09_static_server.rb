@@ -21,12 +21,12 @@ app = Proc.new do |env|
   res.finish
 end
 
-app = Rack::Builder.new do
+app_stack = Rack::Builder.new do
   use Static
   run app
 end.to_app
 
 Rack::Server.start(
- app: app,
+ app: app_stack,
  Port: 3000
 )
