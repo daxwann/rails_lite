@@ -1,5 +1,6 @@
 require 'rack'
 require_relative '../lib/controller_base.rb'
+require_relative '../lib/show_exceptions'
 require_relative '../lib/router'
 
 # To test out your CSRF protection, go to the new dog form and
@@ -87,7 +88,12 @@ app = Proc.new do |env|
   res.finish
 end
 
+app_stack = Rack::Builder.new do
+  use ShowExceptions
+  run app
+end.to_app
+
 Rack::Server.start(
- app: app,
+ app: app_stack,
  Port: 3000
 )
